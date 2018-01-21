@@ -1,3 +1,6 @@
+% Assume "" empty string is 0
+somma_numeri("", 0) :- !.
+
 somma_numeri(String, Somma) :-
   atom_chars(String, Chars),
   phrase(parse_numbers(List), Chars),
@@ -55,8 +58,7 @@ parse_digit(Digit) -->
 
 % A valid digit is made by 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 valid_digit(Digit) :-
-  member(Digit, ['0','1','2','3','4','5','6','7','8','9','0','.']).
-
+  member(Digit, ['0','1','2','3','4','5','6','7','8','9','0','.','+','-']).
 
 somma([], 0) :- !.
 
