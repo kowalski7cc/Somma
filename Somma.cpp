@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include<string.h>
 
 struct acc
 {
@@ -17,6 +18,11 @@ float somma(acc * a, char b[], int p)
 		a = (acc *)malloc(sizeof(acc));
     	a->mem = (char *) malloc(sizeof(char)*15);
     	a->size = 0;
+	}
+	
+	if(a->size >= 15) {
+		error = true;
+		return 1;
 	}
 	
 	char c = b[p];
@@ -65,8 +71,10 @@ int main(int argc, char *argv[])
 		float r = somma(NULL, argv[1], 0);
 		if (!error)
 			printf("Result: %f\n", r);
-		else
+		else if (r == 0)
 			printf("Invalid input: \"%s\"\n", argv[1]);
+		else if (r == 1)
+		 	printf("Input number is too big\n");
 	} else {
 		printf("No arguments provided\n");
 	}
