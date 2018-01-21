@@ -5,6 +5,7 @@ struct acc
 {
   char * mem;
   int size;
+  bool isFloat;
 };
 
 static bool error = false;
@@ -29,8 +30,24 @@ float somma(acc * a, char b[], int p)
 		a->mem[a->size] = '\0';
 	    return atof(a->mem) + somma(NULL, b, p+1);
 	}
-	else if ((c >= '0' && c <= '9') || c == '.')
+	else if ((c >= '0' && c <= '9') || c == '.' || c == '+' || c == '-')
 	{
+		// We accept '.' only if there is only one in our number
+		if(c == '.' && a->isFloat == true)
+		{
+			error = true;
+			return 0;
+		}
+		else if (c == '.')
+		{
+			a->isFloat = true;
+		}
+		// We accept '+' and '-' symbols only if number starts with it
+		else if ((c == '+' || c == '-') && a->size > 0)
+		{
+			error = true;
+			return 0;
+		}
 		a->mem[a->size++] = c;
 		return somma(a, b, p+1);
 	}
@@ -47,10 +64,10 @@ int main(int argc, char *argv[])
 	{
 		float r = somma(NULL, argv[1], 0);
 		if (!error)
-			printf("Risultato: %f\n", r);
+			printf("Result: %f\n", r);
 		else
-			printf("Errore nella computazione dell'input: \"%s\"\n", argv[1]);
+			printf("Invalid input: \"%s\"\n", argv[1]);
 	} else {
-		printf("Non sono pervenuti argomenti\n");
+		printf("No arguments provided\n");
 	}
 }
