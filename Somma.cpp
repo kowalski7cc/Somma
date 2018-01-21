@@ -11,16 +11,16 @@ struct acc
 
 static bool error = false;
 
-float somma(acc * a, char b[], int p)
+double somma(acc * a, char b[], int p)
 {
 	if (a == NULL)
 	{
 		a = (acc *)malloc(sizeof(acc));
-    	a->mem = (char *) malloc(sizeof(char)*15);
+    	a->mem = (char *) malloc(sizeof(char)*308);
     	a->size = 0;
 	}
 	
-	if(a->size >= 15) {
+	if(a->size > 308) {
 		error = true;
 		return 1;
 	}
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 {
 	if(argc > 1)
 	{
-		float r = somma(NULL, argv[1], 0);
+		double r = somma(NULL, argv[1], 0);
 		if (!error)
 			printf("Result: %f\n", r);
 		else if (r == 0)
