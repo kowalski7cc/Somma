@@ -1,4 +1,7 @@
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Somma {
 
 	public static void main(String[] args) {
@@ -15,14 +18,9 @@ public class Somma {
 	}
 
 	public static BigDecimal somma(String myString) throws NumberFormatException {
-		BigDecimal bigDecimal = new BigDecimal(0);
-		String[] numbers = myString.split(" ");
-		for (String current : numbers) {
-			if (current.length() != 0) {
-				bigDecimal = bigDecimal.add(new BigDecimal(current));
-			}
-		}
-		return bigDecimal;
+		AtomicReference<BigDecimal> reference = new AtomicReference<BigDecimal>(new BigDecimal(0));
+		Arrays.asList(myString.split(" ")).forEach(n -> reference.set(reference.get().add(new BigDecimal(n))));
+		return reference.get();
 	}
 
 }
